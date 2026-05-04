@@ -1,0 +1,3 @@
+Before running the program, make sure to run
+the provided bash script (drop_page_cache.sh) to clear 
+the page cache.
