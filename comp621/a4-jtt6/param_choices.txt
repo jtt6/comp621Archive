@@ -1,0 +1,20 @@
+git_clone.fio: The graphs produced for disk.io and disk.ops demonstrated both read and 
+write operations with moderate bandwidth, so rw was set to randrw. Since CPU usage was 
+fairly spiky and disk throughput was relatively low, concurrency was probably limited, 
+so I set numjobs=1 and iodepth=1. The block size and I/O data size were set to 64k and 
+512M, respectively, reflecting a moderate amount of read and write operations.
+
+read.fio: There were only read operations, so naturally, I set rw=read. The reads were 
+already stated to be sequential, and CPU usage was low, which indicated that there was 
+little to no concurrency (numjobs=1, iodepth=1). As many files were being read, block size 
+and I/O data size had relatively large parameters (bs=128k, size=1G). 
+
+git_push.fio: There were mostly write operations, and sequential access was likely since 
+bandwidth was high and IOPS were low (rw=write). CPU usage only really had about 3 significant 
+peaks, and this low usage indicated that there was little to no concurrency (numjobs=1. iodepth=1). 
+There were sizable write calls from the disk.io graph, so reasonable sizes were chosen (bs=64k, size=512k).
+
+git_gc.fio: The graphs indicated that there were mostly write operations, but some read 
+operations with low bandwidth and high IOPS (rw = randrw). The CPU usage was high and spiky, 
+but not sustained, indicating low concurrency (numjobs=1, iodepth=11). Large sizes were provided 
+as the high IOPS indicated there was a lot to clear up.

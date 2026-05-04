@@ -1,0 +1,13 @@
+[global]
+ioengine=libaio
+direct=1
+runtime=30
+time_based
+group_reporting
+
+[workload]
+rw=randrw
+bs=128k
+size=1G
+numjobs=1
+iodepth=1
