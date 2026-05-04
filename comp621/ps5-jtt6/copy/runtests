@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Sample bash script for you to edit and use to generate your data.
+min_size=1
+max_size=4096
+
+repeats=5
+
+# Change to your minimum size.
+size=$min_size
+
+# Loop up to a maximum size.
+# Change the maximum.
+# You will want a larger maximum.
+while [ $size -le $max_size ]
+do
+    echo "File size = ${size} MB"
+
+    # Create a file of the given size.
+    input_file="testinput_${size}MB"
+    output_file="testoutput_${size}MB"
+    rm -f "$input_file" "$output_file"
+    # fallocate -l $(($size * 1024 * 1024)) "input_file"
+    dd if=/dev/urandom of="$input_file" bs=1M count=$size	
+
+    # Do each test some number of times, to allow for variance.
+    # You can change the number, if desired.
+    for i in $(seq 1 $repeats)
+    do
+        # Run your tests.
+        # Possibly change how you run these to use "/usr/bin/time".
+        # These should print the running times.
+	echo "Run $i:"
+
+        echo -n "copyfile:"
+	/usr/bin/time -f "%e" ./copyfile "$input_file" "$output_file"
+
+        echo -n "mmcopy:"
+        /usr/bin/time -f "%e" ./mmcopy "$input_file" "$output_file"
+    done
+
+    # Update size.
+    # Change how you increment.
+    # You will want larger increments, possibly increasingly geometrically.
+    size=$(($size * 2))
+done
+
